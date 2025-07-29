@@ -13,6 +13,7 @@ public class Mino {
 	int autoDropCounter = 0;
 	public int direction = 1; //There are 4 directions
 	boolean leftCollision, rightCollision, bottomCollision;
+	public boolean active = true;
 	
 	public void create(Color c) {
 		b[0] = new Block(c);
@@ -156,16 +157,23 @@ public class Mino {
 			KeyHandler.rightPressed = false;
 		}
 		
-		autoDropCounter++;
-		if(autoDropCounter == PlayManager.dropInterval) {
-			
-			//the mino goes down
-			b[0].y += Block.SIZE;
-			b[1].y += Block.SIZE;
-			b[2].y += Block.SIZE;
-			b[3].y += Block.SIZE;
-			autoDropCounter = 0;
+		if(bottomCollision) {
+			active = false;
 		}
+		else {
+			
+			autoDropCounter++;
+			if(autoDropCounter == PlayManager.dropInterval) {
+				
+				//the mino goes down
+				b[0].y += Block.SIZE;
+				b[1].y += Block.SIZE;
+				b[2].y += Block.SIZE;
+				b[3].y += Block.SIZE;
+				autoDropCounter = 0;
+			}
+		}
+		
 	}
 	public void draw(Graphics2D g2) {
 		
